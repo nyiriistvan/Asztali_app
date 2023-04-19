@@ -11,7 +11,7 @@ const ProductList = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/api/productlist');
+      const response = await axios.get('http://localhost:8000/api/productlist');
       setProducts(response.data);
     } catch (error) {
       console.log(error);
@@ -20,7 +20,7 @@ const ProductList = () => {
 
   const deleteProduct = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:8000/api/api/deleteproduct/${id}`);
+      const response = await axios.delete(`http://localhost:8000/api/deleteproduct/${id}`);
       setProducts(products.filter(product => product.id !== id));
     } catch (error) {
       console.log(error);

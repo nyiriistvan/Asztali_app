@@ -52,7 +52,7 @@ const App = () => {
       });
   
       if (response.ok) {
-        setIsAdmin(true);
+        setIsAdmin(false);
       } else {
         const responseData = await response.json();
         alert(responseData.message);

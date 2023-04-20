@@ -14,7 +14,7 @@ const ProductForm = ({ productId, onSubmit }) => {
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/products/${productId}`);
+      const response = await axios.get(`http://127.0.0.1:8000/api/products/${productId}`);
       setName(response.data.name);
       setPrice(response.data.price);
     } catch (error) {
@@ -27,9 +27,9 @@ const ProductForm = ({ productId, onSubmit }) => {
       const data = { name, price };
       let response;
       if (productId) {
-        response = await axios.put(`http://localhost:8000/api/updateproduct/${productId}`, data);
+        response = await axios.put(`http://127.0.0.1:8000/api/updateproduct/${productId}`, data);
       } else {
-        response = await axios.post('http://localhost:8000/api/submit-product', data);
+        response = await axios.post('http://127.0.0.1:8000/api/submit-product', data);
       }
       onSubmit(response.data);
     } catch (error) {

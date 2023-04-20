@@ -5,12 +5,14 @@ import ProductList from './ProductList';
 import ProductForm from './ProductForm';
 import { getProducts, createProduct, updateProduct, deleteProduct } from './api';
 
+
+
 const App = () => {
   const [products, setProducts] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  
   useEffect(() => {
     loadProducts();
   }, []);
@@ -39,9 +41,11 @@ const App = () => {
   };
 
   const handleLogin = async () => {
-    try {
-      const response = await fetch(`https://localhost:8000/api/login`, {
+    alert (usernameOrEmail+ " " + password);
+     try {
+      const response = await fetch(`http://127.0.0.1:8000/api/login`, {
         method: 'POST',
+        //mode:"no-cors",
         headers: {
           'Content-Type': 'application/json'
         },
@@ -52,7 +56,7 @@ const App = () => {
       });
   
       if (response.ok) {
-        setIsAdmin(false);
+        setIsAdmin(true);
       } else {
         const responseData = await response.json();
         alert(responseData.message);
@@ -61,7 +65,7 @@ const App = () => {
       setUsernameOrEmail('');
       setPassword('');
     } catch (error) {
-      console.error(error);
+      console.log(error);
       alert('An error occurred while logging in.');
     }
   };

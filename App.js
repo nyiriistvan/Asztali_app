@@ -41,22 +41,23 @@ const App = () => {
   };
 
   const handleLogin = async () => {
-    alert (usernameOrEmail+ " " + password);
-     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/login`, {
+    alert(usernameOrEmail + ' ' + password);
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/login', {
         method: 'POST',
-        //mode:"no-cors",
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           username_or_email: usernameOrEmail,
-          password: password
-        })
+          password: password,
+        }),
       });
   
       if (response.ok) {
         setIsAdmin(true);
+        const responseData = await response.json();
+        console.log('Bearer Token:', responseData.access_token);
       } else {
         const responseData = await response.json();
         alert(responseData.message);
@@ -69,6 +70,9 @@ const App = () => {
       alert('An error occurred while logging in.');
     }
   };
+  
+  
+  
   
 
   const handleLogout = () => {
@@ -101,7 +105,7 @@ const App = () => {
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Product List</Text>
-        {isAdmin && <Button title="Logout" onPress={handleLogout} />}
+        {isAdmin && <Button title="Új termék felvétele" onPress={handleSubmitProduct} />}
         <ProductList products={products} onEditProduct={handleEditProduct} onDeleteProduct={handleDeleteProduct} />
         {isAdmin && <ProductForm onSubmit={handleSubmitProduct} />}
       </ScrollView>
@@ -118,6 +122,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
+    width:"50%",
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -135,7 +140,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   loginInputContainer: {
-    width: '100%',
+    width: '50%',
     marginBottom: 20,
   },
   loginInputLabel: {
@@ -151,7 +156,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   loginButton: {
-    width: '100%',
+    width: '50%',
     backgroundColor: '#007AFF',
     borderRadius: 5,
     paddingVertical: 10,

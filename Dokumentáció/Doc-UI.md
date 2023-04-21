@@ -13,22 +13,22 @@ A következő parancsokra lesz szükségünk az alkalmazás futtatásához:
 Az alkalmazás a következő komponenseket tartalmazza:
 
 ### LoginForm
-Ez a komponens arra szolgál, hogy egy nyomtatványon keresztül bevigyük az adatainkat az adatbázisba.
+Ez a komponens arra szolgál, hogy egy nyomtatványon keresztül bevigyük az adatainkat az adatbázisba.Ez csak az admin jogosultásggal rendelkező fiókokat engedi be.
 
 ### Loginscreen
-Ez az oldal jelenik meg azután, hogy sikeresen leellenőrizte a rendszer, hogy rendelkezünk admin jogosultsággal.
+Ez az oldal jelenik meg azután, hogy sikeresen leellenőrizte a rendszer, hogy rendelkezünk admin jogosultsággal. Ezen a felületen láthatjuk majd a bejelentkezés utáni menüket.
 
 ### ProductForm
-Ez a komponens arra szolgál, hogy új terméket vegyünk fel az adatbázisba.
+Ez a komponens arra szolgál, hogy új terméket vegyünk fel az adatbázisba.Ez a funkció csakis a Bearer tokennel használható.
 
 ### ProductList
-Ez a komponens arra szolgál, hogy kilistázzuk a termékeket, illetve ezen a fülön tudjuk törölni a már nem forgalomban lévő termékeket.
+Ez a komponens arra szolgál, hogy kilistázzuk a termékeket, illetve ezen a fülön tudjuk törölni a már nem forgalomban lévő termékeket. Ez a komponens együtt dolgozik a ###ProductForms komponenssel, illetve az API komponenssel igy kéri le az adatokat a backend szervertől.
 
 ### Adminlogin
-Ez a komponens arra szolgál, hogy a LoginForm-ból átküldött adatokat ellenőrizzük, hogy admin jogosultsággal rendelkeznek-e az `is_admin` függvényen keresztül.
+Ez a komponens arra szolgál, hogy a LoginForm-ból átküldött adatokat ellenőrizzük, hogy admin jogosultsággal rendelkeznek-e az `is_admin` függvényen keresztül. Hogyha nem admin aki beakar lépni hibára fut és nem engedi bejelentkezni.
 
 ### API
-Ez a komponens köti össze az adatbázist a React Native alkalmazással.
+Ez a komponens köti össze az adatbázist a React Native alkalmazással.Ez szolgál arra hogy minden CRUD műveletet eltudjunk az adatbázisban végezni, az alkalmazás által.
 
 ### App
 Ez az alkalmazás fő komponense. Ebben vannak összesítve a fentebb leírt komponensek, és ezáltal működik minden felület megfelelően.

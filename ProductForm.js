@@ -23,7 +23,7 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/products`);
+      const response = await axios.post(`localhost:8000/api/productlist`);
       setName(response.data.name);
       setPrice(response.data.price);
       setWeight(response.data.weight);
@@ -36,7 +36,7 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
 
   const fetchExistingCategories = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/products');
+      const response = await axios.post('localhost:8000/api/productlist');
       setExistingCategories(response.data);
     } catch (error) {
       console.log(error);
@@ -52,7 +52,7 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
     onLogout();
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async () => { as
     try {
       const data = { name, price, category, weight, description };
       const headers = { Authorization: `Bearer ${bearerToken}` };

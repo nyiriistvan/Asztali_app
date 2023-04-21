@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, Button } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ProductList from './ProductList';
 import ProductForm from './ProductForm';
 import { getProducts, createProduct, updateProduct, deleteProduct } from './api';
 
-
+const TOKEN_KEY = 'TOKEN_KEY';
 
 const App = () => {
   const [products, setProducts] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+
   useEffect(() => {
+    checkLoggedIn();
     loadProducts();
   }, []);
 
@@ -41,7 +43,6 @@ const App = () => {
   };
 
   const handleLogin = async () => {
-    alert(usernameOrEmail + ' ' + password);
     try {
       const response = await fetch('http://127.0.0.1:8000/api/login', {
         method: 'POST',
@@ -53,30 +54,36 @@ const App = () => {
           password: password,
         }),
       });
-  
+
       if (response.ok) {
-        setIsAdmin(true);
         const responseData = await response.json();
-        console.log('Bearer Token:', responseData.access_token);
+        const token = responseData.data.token; 
+        console.log(token)
+        await AsyncStorage.setItem(TOKEN_KEY, token);
+        setIsAdmin(true);
       } else {
         const responseData = await response.json();
         alert(responseData.message);
       }
-  
+
       setUsernameOrEmail('');
       setPassword('');
     } catch (error) {
       console.log(error);
-      alert('An error occurred while logging in.');
+      alert('Hiba a bejelentkezésnél.');
     }
   };
-  
-  
-  
-  
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem(TOKEN_KEY);
     setIsAdmin(false);
+  };
+
+  const checkLoggedIn = async () => {
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
+    if (token) {
+      setIsAdmin(true);
+    }
   };
 
   const renderLogin = () => {
@@ -85,13 +92,13 @@ const App = () => {
         <Text style={styles.loginTitle}>Admin Login</Text>
         <TextInput
           style={styles.loginInput}
-          placeholder="Username or Email"
+          placeholder="Felhasználónév"
           value={usernameOrEmail}
           onChangeText={(text) => setUsernameOrEmail(text)}
         />
         <TextInput
           style={styles.loginInput}
-          placeholder="Password"
+          placeholder="Jelszó"
           value={password}
           secureTextEntry={true}
           onChangeText={(text) => setPassword(text)}
@@ -115,7 +122,9 @@ const App = () => {
   return isAdmin ? renderApp() : renderLogin();
 };
 
-const styles = StyleSheet.create({
+
+
+    const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',

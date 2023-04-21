@@ -105,7 +105,7 @@ const App = () => {
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Product List</Text>
-        {isAdmin && <Button title="Új termék felvétele" onPress={handleSubmitProduct} />}
+        {isAdmin && <Button title="Kijelentkezés" onPress={handleLogout} />}
         <ProductList products={products} onEditProduct={handleEditProduct} onDeleteProduct={handleDeleteProduct} />
         {isAdmin && <ProductForm onSubmit={handleSubmitProduct} />}
       </ScrollView>

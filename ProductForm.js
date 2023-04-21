@@ -36,7 +36,7 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
 
   const fetchExistingCategories = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/categories');
+      const response = await axios.get('http://127.0.0.1:8000/api/products');
       setExistingCategories(response.data);
     } catch (error) {
       console.log(error);
@@ -58,7 +58,7 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
       const headers = { Authorization: `Bearer ${bearerToken}` };
       let response;
       if (productId) {
-        response = await axios.put(`http://127.0.0.1:8000/api/updateproduct/${productId}`, data, { headers });
+        response = await axios.put(`http://127.0.0.1:8000/api/updateproduct{id}`, data, { headers });
       } else {
         response = await axios.post('http://127.0.0.1:8000/api/submit-product', data, { headers });
       }

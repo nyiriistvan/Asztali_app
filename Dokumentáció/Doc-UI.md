@@ -1,38 +1,37 @@
-Eggshop mobilos applikáció
+# Eggshop mobilos applikáció
 
-Bevezető
-Ez az React nativeban megírt program, arra szolgál hogy a boltot akár moblilról is elérjék a beszerzéssel foglalkozók. 
-Így könnyebben átlátják a raktárban lévő termékeket, illetve felis tudják tölteni az új szállitmányt.
+## Bevezető
+Ez a React Native-ban megírt program arra szolgál, hogy a boltot akár mobilról is elérjék a beszerzéssel foglalkozók. Így könnyebben átlátják a raktárban lévő termékeket, illetve fel tudják tölteni az új szállítmányt.
 
-Hogy futtatni tudjuk az appot a következő parancsokra lesz szükségünk:
+## Hogyan futtatható az app?
+A következő parancsokra lesz szükségünk az alkalmazás futtatásához:
+- Először az `npm install` parancsot kell futtatni, hogy telepítsük a `Node-Modules` könyvtárat.
+- Ezután az `npx expo` parancsra van szükségünk, amivel elindíthatjuk az alkalmazást és megjeleníthetjük a felületet.
+- Miután megadjuk a belépési adatokat, beléphetünk a felületre, ahol kezelni tudjuk a termékeket.
 
--Elindításához előszőr az npm install parancsot használjuk hogy telepítsük a Node-Modules könyvtárat hozzá.
--Ezután az elindításához szükségünk lesz az npx expo parancsra amivel elindul a programunk és megjeleníti a felületet.
--Ezután megadjuk a belépési adatokat, ezután beléptet minket a felületre ahol kezelni tudjuk a termékeket. 
--A program a következő komponenseket tartalmazza:
+## Alkalmazás komponensei
+Az alkalmazás a következő komponenseket tartalmazza:
 
-LoginForm
+### LoginForm
+Ez a komponens arra szolgál, hogy egy nyomtatványon keresztül bevigyük az adatainkat az adatbázisba.
 
-Ez arra szolgál hogy egy nyomtatványon keresztül az adatainkat bevigyük az adatbázsiba.
+### Loginscreen
+Ez az oldal jelenik meg azután, hogy sikeresen leellenőrizte a rendszer, hogy rendelkezünk admin jogosultsággal.
 
-Loginscreen
-Ez azután jelenik meg hogy sikeresen leellenőrizte a rendszer hogy admin jogosultságunk van.
+### ProductForm
+Ez a komponens arra szolgál, hogy új terméket vegyünk fel az adatbázisba.
 
-ProductForm
-Hasonlóan a loginformhoz ez a komponens felel azért hogy új terméket vehessünk fel az adatbázisba.
+### ProductList
+Ez a komponens arra szolgál, hogy kilistázzuk a termékeket, illetve ezen a fülön tudjuk törölni a már nem forgalomban lévő termékeket.
 
-ProductList
-Ez a komponens azért felel hogy kilistázzuk a termékeket illetve ezen a fülön tudjuk törölni is a már nem forgalomban lévő termékeket.
+### Adminlogin
+Ez a komponens arra szolgál, hogy a LoginForm-ból átküldött adatokat ellenőrizzük, hogy admin jogosultsággal rendelkeznek-e az `is_admin` függvényen keresztül.
 
-Adminlogin
-Ez azért felel hogy a loginformból átküldött adatok biztosan admin jogosultsággal rendelkeznek-e az is_admin függvényen keresztül.
+### API
+Ez a komponens köti össze az adatbázist a React Native alkalmazással.
 
-Api
-Ez a komponens köti össze az adatbázist a React Nativ alkalmazással.
+### App
+Ez az alkalmazás fő komponense. Ebben vannak összesítve a fentebb leírt komponensek, és ezáltal működik minden felület megfelelően.
 
-App
-Ez a fő komponense a mobilos appnak. Ebben vannak összesítve a fentebb leirt komponensek és ezáltal müködik minden felület megfelelően.
-
-Várható fejlesztések
-
-Jelenlegi állapotában még nem teljes értékű mobilos applikáció és szeretnénk bővíteni különböző funkicókkal amik segítik a dolgozók munkáját ileltve könnyítik. Folyamatosan fejleszteni szeretnénk, új desgint, és akár több funkciót hozzáadni a programot megvásárló cég kérésére.
+## Várható fejlesztések
+Jelenlegi állapotában még nem teljes értékű mobilos alkalmazás, és szeretnénk bővíteni különböző funkciókkal, amelyek segítik a dolgozók munkáját, illetve könnyítik azt. Folyamatosan fejleszteni szeretnénk, új design-t készíteni, és akár több funkciót hozzáadni a programot megvásárló cég kérésére. 

@@ -9,65 +9,55 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
   const [weight, setWeight] = useState('');
   const [category, setCategory]= useState('');
   const [description, setDescription]= useState('');
-  const [existingProducts, setExistingProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState('');
+  const [categories,setCategories] = useState([]);
+  const [handleProductSelect,setSelectedProduct] = useState('');
   const [existingCategories, setExistingCategories] = useState([]);
 
   useEffect(() => {
-    if (productId) {
-      fetchProduct();
-    }
-    fetchExistingCategories();
+    getCategories();
   }, []);
-
-
-  const fetchProduct = async () => {
-    try {
-      const response = await axios.post(`localhost:8000/api/productlist`);
-      setName(response.data.name);
-      setPrice(response.data.price);
-      setWeight(response.data.weight);
-      setCategory(response.data.category);
-      setDescription(response.data.description);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchExistingCategories = async () => {
-    try {
-      const response = await axios.post('localhost:8000/api/productlist');
-      setExistingCategories(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleProductSelect = (itemValue) => {
-    setSelectedProduct(itemValue);
-    onModify(itemValue);
-  };
   
-  const handleLogout = () => {
-    onLogout();
+  const getCategories = async () => {
+    try {
+      //const response = await fetch(`http://127.0.0.1:8000/api/categories`);
+      //const data = await response.json();
+      fetch(`http://127.0.0.1:8000/api/categories`)
+      .then(res => res.json())
+      .then(res => {
+        setCategories(res.data);
+      });
+      
+      //setCategories(data);
+      console.log(categories);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleSubmit = async () => { as
+  
+  const handleSubmit = async () => {
     try {
       const data = { name, price, category, weight, description };
       const headers = { Authorization: `Bearer ${bearerToken}` };
-      let response;
+      let url = 'http://127.0.0.1:8000/api/submit-product';
       if (productId) {
-        response = await axios.put(`http://127.0.0.1:8000/api/updateproduct{id}`, data, { headers });
-      } else {
-        response = await axios.post('http://127.0.0.1:8000/api/submit-product', data, { headers });
+        url = `http://127.0.0.1:8000/api/updateproduct/${product_Id}`;
       }
-      onSubmit(response.data);
+      const response = await fetch(url, {
+        method: productId ? 'PUT' : 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      const responseData = await response.json();
+      onSubmit(responseData);
     } catch (error) {
       console.log(error);
     }
-  
   };
+  
 
   return (
     <View style={styles.container}>
@@ -80,14 +70,13 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
       <TextInput value={description} onChangeText={setDescription} style={styles.input} />
       <Text style={styles.label}>Kategória:</Text>
       <Picker
-            selectedValue={category}
-            style={styles.input}
-            onValueChange={(itemValue) => setCategory(itemValue)}>
-      <Picker.Item label="Válasszon Kategóriát" value="" />
-            {existingCategories.map((category) => (
-      <Picker.Item key={category.id} label={category.name} value={category.id} />
-  ))}
-</Picker>
+        selectedValue={category}
+        onValueChange={(itemValue) => setCategory(itemValue)}
+      >
+        {categories.map((category) => (
+          <Picker.Item key={category.id} label={category.category} value={category.id} />
+        ))}
+      </Picker>
       <Text style={styles.label}>Ár:</Text>
       <TextInput value={price} onChangeText={setPrice} style={styles.input} />
       <Button title="Mentés" onPress={handleSubmit} style={styles.button} />

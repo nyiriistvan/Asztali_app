@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ProductList from './ProductList';
 import ProductForm from './ProductForm';
+import MyComponent from './Mycomponent';
 import { getProducts, createProduct, updateProduct, deleteProduct } from './api';
 
 const TOKEN_KEY = 'TOKEN_KEY';
@@ -115,6 +116,7 @@ const App = () => {
         {isAdmin && <Button title="Kijelentkezés" onPress={handleLogout} />}
         <ProductList products={products} onEditProduct={handleEditProduct} onDeleteProduct={handleDeleteProduct} />
         {isAdmin && <ProductForm onSubmit={handleSubmitProduct} />}
+        <MyComponent/>
       </ScrollView>
     );
   };

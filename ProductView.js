@@ -7,45 +7,35 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const ProductView = () => {
   const [products, setProduct] = useState([]);
- 
 
   useEffect(() => {
-    
     const fetchProducts = async () => {
       try {
-      fetch(`http://127.0.0.1:8000/api/productlist`)
-      .then(res => res.json())
-      .then(res => {
-        setProduct(res.data);
-      });
-
+        fetch(`http://127.0.0.1:8000/api/productlist`)
+          .then((res) => res.json())
+          .then((res) => {
+            setProduct(res.data);
+          });
       } catch (error) {
         console.error(error);
       }
     };
-    const handleDelete = async (id) => {
-      try {
-        const response = await fetch(`http://127.0.0.1:8000/api/deleteproduct/${id}`, {
-          method: 'DELETE',
-        });
-        setProducts(products.filter(product => product.id !== id));
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
     fetchProducts();
-    getImageUrl();
-    renderEditButton();
-    renderDeleteButton();
-    handleDelete();
   }, []);
 
-  const getImageUrl = (blobData) => {
-    const blob = new Blob([blobData], { type: "image/jpeg" });
-    const url = URL.createObjectURL(blob);
-    return url;
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/deleteproduct/${id}`, {
+        method: 'DELETE',
+      });
+      const updatedProducts = products.filter(product => product.id !== id);
+      setProduct(updatedProducts);
+    } catch (error) {
+      console.log(error);
+    }
   };
+  
   const renderEditButton = (id) => {
     return (
       <TouchableOpacity style={[styles.button, styles.editButton]} onPress={() => handleUpdate(id)}>
@@ -61,17 +51,18 @@ const ProductView = () => {
       </TouchableOpacity>
     );
   };
+
   return (
     <View style={styles.container}>
       <Table>
         <TableHeader style={styles.header}>
           <TableRow>
-            <TableCell >Név</TableCell>
-            <TableCell >Leírás</TableCell>
-            <TableCell >Kategória</TableCell>
+            <TableCell>Név</TableCell>
+            <TableCell>Leírás</TableCell>
+            <TableCell>Kategória</TableCell>
             <TableCell>Ár</TableCell>
             <TableCell>Súly</TableCell>
-            <TableCell >Kép</TableCell>
+            <TableCell>Kép</TableCell>
             <TableCell>Műveletek</TableCell>
           </TableRow>
         </TableHeader>
@@ -87,8 +78,8 @@ const ProductView = () => {
                 <AntDesign name="edit" style={styles.icon} />
               </TouchableOpacity>
               <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(product.id)}>
-              <FontAwesome name="trash-o" style={styles.icon} />
-            </TouchableOpacity>
+                <FontAwesome name="trash-o" style={styles.icon} />
+              </TouchableOpacity>
             </TableCell>
           </TableRow>
         ))}
@@ -96,6 +87,7 @@ const ProductView = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: "#fff" },
   header: { height: 50, backgroundColor: "#537791" },

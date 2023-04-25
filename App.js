@@ -15,10 +15,6 @@ const App = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [price, setPrice] = useState(null);
-  const [name,   setName] = useState(null);
-  const [weight,   setWeight] = useState(null);
-  const [description,   setDescription] = useState(null);
-  const [categories,   setCategories] = useState(null);
   const [product, setProduct] = useState([]);
   useEffect(() => {
     checkLoggedIn();
@@ -35,8 +31,8 @@ const App = () => {
       const response = await fetch(`http://127.0.0.1:8000/api/productlist`);
       const responseData = await response.json();
       console.log(responseData);
-      setProduct(responseData);
-    
+      setProducts(responseData);
+      
     } catch (error) {
       console.log(error);
     }
@@ -46,11 +42,6 @@ const App = () => {
     try {
       const data = { name, price, weight, description, categories };
       const product = await (productId ? updateProduct(productId, data) : createProduct(data));
-      setName(name);
-      setPrice(price);
-      setWeight(weight);
-      setDescription(description);
-      setCategories(categories);
       handleSubmitProduct(product);
     } catch (error) {
       console.log(error);
@@ -139,7 +130,7 @@ const App = () => {
         {isAdmin && <Button title="Kijelentkezés" onPress={handleLogout} />}
         <ProductList products={products} onEditProduct={handleEditProduct} onDeleteProduct={handleDeleteProduct} />
         {isAdmin && <ProductForm onSubmit={handleSubmit({ name: products.name, price: products.price, weight: products.weight, description: products.description, categories: products.categories })} />}
-        <ProductView product={product} navigation={navigation} />
+        <ProductView product={setProducts} navigation={navigation} />
       </ScrollView>
     );
   };

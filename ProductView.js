@@ -4,38 +4,79 @@ import { Table, TableCell,TableHeader,TableRow } from './Table';
 import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+//import {handleDeleteProduct} from './App';
+const BASE_URL = 'http://127.0.0.1:8000/api';
 
 const ProductView = () => {
   const [products, setProduct] = useState([]);
+  const [product,setProducts] =useState([]);
 
   useEffect(() => {
+    
     const fetchProducts = async () => {
       try {
-        fetch(`http://127.0.0.1:8000/api/productlist`)
-          .then((res) => res.json())
-          .then((res) => {
-            setProduct(res.data);
-          });
+      fetch(`http://127.0.0.1:8000/api/productlist`)
+      .then(res => res.json())
+      .then(res => {
+        setProduct(res.data);
+      });
+
       } catch (error) {
         console.error(error);
       }
     };
-
+    
     fetchProducts();
+    //getImageUrl();
+    renderEditButton();
+    renderDeleteButton();
   }, []);
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/deleteproduct/${id}`, {
+        fetch(`http://localhost:8000/api/deleteproduct/${id}`, {
         method: 'DELETE',
       });
-      const updatedProducts = products.filter(product => product.id !== id);
-      setProduct(updatedProducts);
+      setProducts(product.filter(product => product.id !== id));
+      console.log(product.name);
     } catch (error) {
       console.log(error);
     }
   };
+  const uploadImage = async (productId, image) => {
+    const formData = new FormData();
+    formData.append('image', {
+      uri: image.uri,
+      type: image.type,
+      name: image.fileName,
+    });
   
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const response = await fetch(`${BASE_URL}/api/image/${productId}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+
+  //const getImageUrl = async (id) => {
+   // const token = await AsyncStorage.getItem('token');
+   // return `${BASE_URL}/api/image/${id}?token=${token}`;
+ // };
   const renderEditButton = (id) => {
     return (
       <TouchableOpacity style={[styles.button, styles.editButton]} onPress={() => handleUpdate(id)}>
@@ -51,43 +92,54 @@ const ProductView = () => {
       </TouchableOpacity>
     );
   };
-
   return (
     <View style={styles.container}>
-      <Table>
-        <TableHeader style={styles.header}>
-          <TableRow>
-            <TableCell>Név</TableCell>
-            <TableCell>Leírás</TableCell>
-            <TableCell>Kategória</TableCell>
-            <TableCell>Ár</TableCell>
-            <TableCell>Súly</TableCell>
-            <TableCell>Kép</TableCell>
-            <TableCell>Műveletek</TableCell>
-          </TableRow>
-        </TableHeader>
-        {products.map((product) => (
-          <TableRow key={product.id} style={styles.row}>
-            <TableCell>{product.name}</TableCell>
-            <TableCell>{product.description}</TableCell>
-            <TableCell>{product.category_id}</TableCell>
-            <TableCell>{product.price}</TableCell>
-            <TableCell>{product.weight}</TableCell>
-            <TableCell style={styles.buttonContainer}>
-              <TouchableOpacity style={[styles.button, styles.updateButton]} onPress={() => handleUpdate(product.id)}>
-                <AntDesign name="edit" style={styles.icon} />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(product.id)}>
-                <FontAwesome name="trash-o" style={styles.icon} />
-              </TouchableOpacity>
-            </TableCell>
-          </TableRow>
-        ))}
-      </Table>
+     <Table>
+  <TableHeader style={styles.header}>
+    <TableRow>
+      <TableCell>Név</TableCell>
+      <TableCell>Leírás</TableCell>
+      <TableCell>Kategória</TableCell>
+      <TableCell>Ár</TableCell>
+      <TableCell>Súly</TableCell>
+      <TableCell>Kép</TableCell>
+      <TableCell>Műveletek</TableCell>
+    </TableRow>
+  </TableHeader>
+  {products.map((product) => (
+    <TableRow key={product.id} style={styles.row}>
+      <TableCell>{product.name}</TableCell>
+      <TableCell>{product.description}</TableCell>
+      <TableCell>{product.category_id}</TableCell>
+      <TableCell>{product.price}</TableCell>
+      <TableCell>{product.weight}</TableCell>
+      <TableCell>
+        <img
+        //  src={`http://localhost:8000/api/image/${product.id}`}
+        //  alt={product.name}
+        />
+      </TableCell>
+      <TableCell style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.button, styles.updateButton]}
+          onPress={() => handleUpdate(product.id)}
+        >
+          <AntDesign name="edit" style={styles.icon} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={() => handleDelete(product.id)}
+        >
+          <FontAwesome name="trash-o" style={styles.icon} />
+        </TouchableOpacity>
+      </TableCell>
+    </TableRow>
+  ))}
+</Table>
+
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: "#fff" },
   header: { height: 50, backgroundColor: "#537791" },

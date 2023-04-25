@@ -15,7 +15,7 @@ const App = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [price, setPrice] = useState(null);
-
+  const [product, setProduct] = useState([]);
   useEffect(() => {
     checkLoggedIn();
     loadProducts();
@@ -24,6 +24,18 @@ const App = () => {
   const loadProducts = async () => {
     const result = await getProducts();
     setProducts(result.data);
+  };
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/productlist`);
+      const responseData = await response.json();
+      console.log(responseData);
+      setProduct(responseData);
+      
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSubmit = async () => {
@@ -118,7 +130,7 @@ const App = () => {
         {isAdmin && <Button title="Kijelentkezés" onPress={handleLogout} />}
         <ProductList products={products} onEditProduct={handleEditProduct} onDeleteProduct={handleDeleteProduct} />
         {isAdmin && <ProductForm onSubmit={handleSubmit({ name: products.name, price: products.price, weight: products.weight, description: products.description, categories: products.categories })} />}
-        <ProductView products={products} navigation={navigation} />
+        <ProductView product={product} navigation={navigation} />
       </ScrollView>
     );
   };

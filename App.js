@@ -14,6 +14,7 @@ const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [price, setPrice] = useState(null);
 
   useEffect(() => {
     checkLoggedIn();
@@ -25,13 +26,14 @@ const App = () => {
     setProducts(result.data);
   };
 
-  const handleSubmitProduct = async (product) => {
-    if (product.id) {
-      await updateProduct(product.id, product);
-    } else {
-      await createProduct(product);
+  const handleSubmit = async () => {
+    try {
+      const data = { name, price, weight, description, categories };
+      const product = await (productId ? updateProduct(productId, data) : createProduct(data));
+      handleSubmitProduct(product);
+    } catch (error) {
+      console.log(error);
     }
-    loadProducts();
   };
 
   const handleDeleteProduct = async (productId) => {
@@ -115,8 +117,8 @@ const App = () => {
         <Text style={styles.title}>Product List</Text>
         {isAdmin && <Button title="Kijelentkezés" onPress={handleLogout} />}
         <ProductList products={products} onEditProduct={handleEditProduct} onDeleteProduct={handleDeleteProduct} />
-        {isAdmin && <ProductForm onSubmit={handleSubmitProduct} />}
-        <ProductView/>
+        {isAdmin && <ProductForm onSubmit={handleSubmit({ name: products.name, price: products.price, weight: products.weight, description: products.description, categories: products.categories })} />}
+        <ProductView products={products} navigation={navigation} />
       </ScrollView>
     );
   };

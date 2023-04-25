@@ -1,36 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text,Image } from 'react-native';
 
 const ProductView = () => {
-  const [product, setProduct] = useState(null);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProducts = async () => {
       try {
         const response = await fetch(`http://127.0.0.1:8000/api/productlist`);
         const responseData = await response.json();
-        setProduct(responseData);
+        setProducts(responseData);
+        console.log(responseData);
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchProduct();
+    fetchProducts();
   }, []);
 
   return (
     <View>
-      {product ? (
-        <View>
-          <Text>Name: {product.name}</Text>
-          <Text>Price: {product.price}</Text>
-          <Text>Weight: {product.weight}</Text>
-          <Text>Description: {product.description}</Text>
-          <Text>Category: {product.categories}</Text>
-        </View>
-      ) : (
-        <Text>Loading...</Text>
-      )}
+      <Image source={{ uri: products.image }} style={{ width: 200, height: 200 }} />
+      <Text>Name: {products.name}</Text>
+      <Text>Description: {products.description}</Text>
+      <Text>Category ID: {products.category_id}</Text>
+      <Text>ID: {products.id}</Text>
+      <Text>Price: {products.price}</Text>
+      <Text>Weight: {products.weight}</Text>
     </View>
   );
 };

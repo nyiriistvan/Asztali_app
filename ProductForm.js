@@ -42,6 +42,7 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
   const handleSubmit = async () => {
     try {
       const data = { name, price, weight, description,categories, };
+      console.log(data);
       const headers = { Authorization: `Bearer ${await AsyncStorage.getItem(TOKEN_KEY)}` };
       let response;
      // console.log(data,headers);

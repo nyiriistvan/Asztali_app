@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Table, TableCell,TableHeader,TableRow } from './Table';
+import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+
 const ProductView = () => {
   const [products, setProduct] = useState([]);
+ 
 
   useEffect(() => {
     
@@ -18,9 +23,22 @@ const ProductView = () => {
         console.error(error);
       }
     };
+    const handleDelete = async (id) => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/deleteproduct/${id}`, {
+          method: 'DELETE',
+        });
+        setProducts(products.filter(product => product.id !== id));
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     fetchProducts();
-    getImageUrl
+    getImageUrl();
+    renderEditButton();
+    renderDeleteButton();
+    handleDelete();
   }, []);
 
   const getImageUrl = (blobData) => {
@@ -28,29 +46,49 @@ const ProductView = () => {
     const url = URL.createObjectURL(blob);
     return url;
   };
+  const renderEditButton = (id) => {
+    return (
+      <TouchableOpacity style={[styles.button, styles.editButton]} onPress={() => handleUpdate(id)}>
+        <Feather name="edit" size={24} color="white" />
+      </TouchableOpacity>
+    );
+  };
 
+  const renderDeleteButton = (id) => {
+    return (
+      <TouchableOpacity style={[styles.button, styles.deleteButton]} onPress={() => handleDelete(id)}>
+        <Feather name="trash-2" size={24} color="white" />
+      </TouchableOpacity>
+    );
+  };
   return (
-    <View>
-      <Table style={{ borderWidth: 1, borderColor: 'black' }}>
-        <TableHeader style={{ backgroundColor: 'grey' }}>
-        <TableRow>
-        <TableCell style={{ margin: "5px" }}>Név</TableCell>
-        <TableCell style={{ margin: "5px" }}>Leírás</TableCell>
-        <TableCell style={{ margin: "5px" }}>Kategória</TableCell>
-        <TableCell style={{ margin: "5px" }}>Ár</TableCell>
-        <TableCell style={{ margin: "5px" }}>Súly</TableCell>
-        </TableRow>
-
+    <View style={styles.container}>
+      <Table>
+        <TableHeader style={styles.header}>
+          <TableRow>
+            <TableCell >Név</TableCell>
+            <TableCell >Leírás</TableCell>
+            <TableCell >Kategória</TableCell>
+            <TableCell>Ár</TableCell>
+            <TableCell>Súly</TableCell>
+            <TableCell >Kép</TableCell>
+            <TableCell>Műveletek</TableCell>
+          </TableRow>
         </TableHeader>
         {products.map((product) => (
-          <TableRow key={product.id} style={{ backgroundColor: 'white' }}>
-            <TableCell style={{ borderWidth: 1, borderColor: 'black', padding: 5 }}>{product.name}</TableCell>
-            <TableCell style={{ borderWidth: 1, borderColor: 'black', padding: 5 }}>{product.description}</TableCell>
-            <TableCell style={{ borderWidth: 1, borderColor: 'black', padding: 5 }}>{product.category_id}</TableCell>
-            <TableCell style={{ borderWidth: 1, borderColor: 'black', padding: 5 }}>{product.price}</TableCell>
-            <TableCell style={{ borderWidth: 1, borderColor: 'black', padding: 5 }}>{product.weight}</TableCell>
-            <TableCell>
-              <img src={getImageUrl(product.image)} alt={product.name} />
+          <TableRow key={product.id} style={styles.row}>
+            <TableCell>{product.name}</TableCell>
+            <TableCell>{product.description}</TableCell>
+            <TableCell>{product.category_id}</TableCell>
+            <TableCell>{product.price}</TableCell>
+            <TableCell>{product.weight}</TableCell>
+            <TableCell style={styles.buttonContainer}>
+              <TouchableOpacity style={[styles.button, styles.updateButton]} onPress={() => handleUpdate(product.id)}>
+                <AntDesign name="edit" style={styles.icon} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(product.id)}>
+              <FontAwesome name="trash-o" style={styles.icon} />
+            </TouchableOpacity>
             </TableCell>
           </TableRow>
         ))}
@@ -58,5 +96,18 @@ const ProductView = () => {
     </View>
   );
 };
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: "#fff" },
+  header: { height: 50, backgroundColor: "#537791" },
+  text: { textAlign: "center", fontWeight: "bold", color: "#fff" },
+  dataWrapper: { marginTop: -1 },
+  row: { height: 40, backgroundColor: "#E7E6E1" },
+  buttonContainer: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  button: { width: 50, height: 20, borderRadius: 2, justifyContent: "center", alignItems: "center" },
+  updateButton: { backgroundColor: "#4CAF50", marginRight: 5 },
+  deleteButton: { backgroundColor: "#F44336", marginLeft: 5 },
+  buttonText: { color: "#fff" },
+  icon: { fontSize: 20, color: '#fff' },
+});
 
 export default ProductView;

@@ -24,6 +24,10 @@ Ez a komponens arra szolgál, hogy új terméket vegyünk fel az adatbázisba.Ez
 ### ProductList
 Ez a komponens arra szolgál, hogy kilistázzuk a termékeket, illetve ezen a fülön tudjuk törölni a már nem forgalomban lévő termékeket. Ez a komponens együtt dolgozik a ###ProductForms komponenssel, illetve az API komponenssel igy kéri le az adatokat a backend szervertől.
 
+### Productview
+Ez a komponens arra szolgál hogy lekérje az adatokat amik már bentvannak a szerveren és a Table komponensel táblázatba rendezve megjelenítse az adatokat.
+### Table
+Ez a komponens arra szolgál hogy a ProductView komponenesel lehívott adatokat a backend szerverről táblázatban megjelenítse.
 ### Adminlogin
 Ez a komponens arra szolgál, hogy a LoginForm-ból átküldött adatokat ellenőrizzük, hogy admin jogosultsággal rendelkeznek-e az `is_admin` függvényen keresztül. Hogyha nem admin aki beakar lépni hibára fut és nem engedi bejelentkezni.
 
@@ -31,7 +35,7 @@ Ez a komponens arra szolgál, hogy a LoginForm-ból átküldött adatokat ellen�
 Ez a komponens köti össze az adatbázist a React Native alkalmazással.Ez szolgál arra hogy minden CRUD műveletet eltudjunk az adatbázisban végezni, az alkalmazás által.
 
 ### App
-Ez az alkalmazás fő komponense. Ebben vannak összesítve a fentebb leírt komponensek, és ezáltal működik minden felület megfelelően.
+Ez az alkalmazás fő komponense. Ebben vannak összesítve a fentebb leírt komponensek, és ezáltal működik minden felület megfelelően. Ez szolgál az app jelenlegi főoldalaként, innen érhetjük el a föbb funkciókat amik az appban jelenleg müködnek.
 
 ## Várható fejlesztések
 Jelenlegi állapotában még nem teljes értékű mobilos alkalmazás, és szeretnénk bővíteni különböző funkciókkal, amelyek segítik a dolgozók munkáját, illetve könnyítik azt. Folyamatosan fejleszteni szeretnénk, új design-t készíteni, és akár több funkciót hozzáadni a programot megvásárló cég kérésére. 

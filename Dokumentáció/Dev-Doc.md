@@ -1,7 +1,7 @@
 
 ## Fejlesztői Dokumentáció
 
-Ez a Fejlesztői Dokumentáció az Asztali alkalmazás fejlesztői számára készült. Az alábbiakban bemutatom az alkalmazás architektúráját, az általa használt technológiákat, a főbb funkciókat és azok működését, valamint a tesztelési eljárásokat és azok használatát.
+Ez a fejlesztői dokumentáció az Tojgli alkalmazás fejlesztői számára készült. Az alábbiakban bemutatom az alkalmazás architektúráját, az általa használt technológiákat, a főbb funkciókat és azok működését, valamint a tesztelési eljárásokat és azok használatát.
 
 ## Architektúra
 
@@ -18,7 +18,7 @@ A backend elérhető a `api` mappában található útvonalak segítségével.
 
 ## Főbb funkciók és működés
 
-Az Asztali alkalmazás lehetővé teszi a felhasználók számára, hogy virtuális termékeket hozzanak létre és kezeljenek. Az alkalmazás főbb funkciói:
+Az Tojgli alkalmazás lehetővé teszi a felhasználók számára, hogy virtuális termékeket hozzanak létre és kezeljenek. Az alkalmazás főbb funkciói:
 
 - Termékek létrehozása, szerkesztése és törlése.
 - Termékek hozzáadása, szerkesztése és törlése a táblázatban illetve adatbázisban.
@@ -59,4 +59,4 @@ Ezekkel a lépésekkel sikeresen telepítheti és futtathatja az Asztali alkalma
 
 ## Konklúzió
 
-Az Asztali alkalmazás egy egyszerű, de hatékony Termékfelvevő alkalmazás, amely könnyen telepíthető és használható. A dokumentáció által bemutatott információk és lépések lehetővé teszik a fejlesztők számára az alkalmazás bővítését és tesztelését.
+Az Tojgli alkalmazás egy egyszerű, de hatékony Termékfelvevő alkalmazás, amely könnyen telepíthető és használható. A dokumentáció által bemutatott információk és lépések lehetővé teszik a fejlesztők számára az alkalmazás bővítését és tesztelését.

@@ -2,7 +2,7 @@
 
 ## Bevezetés
 
-Az Asztali alkalmazás egy egyszerű és hatékony jegyzettömb alkalmazás, amely lehetővé teszi a felhasználók számára, hogy különböző termékeket jegyezzenek meg, szerkesszenek, tároljanak és töröljenek. Az alkalmazás könnyen használható, és biztosítja a felhasználók számára az reszponzív felhasználói felületet a hatékony termékkezeléshez.
+Az Tojgli alkalmazás egy egyszerű és hatékony jegyzettömb alkalmazás, amely lehetővé teszi a felhasználók számára, hogy különböző termékeket jegyezzenek meg, szerkesszenek, tároljanak és töröljenek. Az alkalmazás könnyen használható, és biztosítja a felhasználók számára az reszponzív felhasználói felületet a hatékony termékkezeléshez.
 
 ## Telepítés
 
@@ -37,7 +37,7 @@ Az Asztali alkalmazásban a termékek törlése nagyon egyszerű. A termék tör
 2. Erősítse meg a törlési szándékát a felugró ablakban.
 3. Kattintson az "Igen" gombra a törlés megerősítéséhez.
 
-Ezzel a kiválasztott termék törölve lesz az Asztali alkalmazásból.
+Ezzel a kiválasztott termék törölve lesz az Tojgli alkalmazásból.
 
 ## Összefoglalás
 

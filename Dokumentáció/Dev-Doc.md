@@ -52,7 +52,7 @@ npm install
 4. Az alkalmazás futtatása:
 
 ```
-npm start
+npx expo
 ```
 
 Ezekkel a lépésekkel sikeresen telepítheti és futtathatja az Asztali alkalmazást a saját gépén.

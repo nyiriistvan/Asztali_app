@@ -28,7 +28,7 @@ const tokenpromise= AsyncStorage.getItem(TOKEN_KEY);
         console.log(token);
         const headers = {"Authorization": `${token}`}
         console.log(headers);
-        fetch ('http://127.0.0.1:8000/api/submit-product',{
+        fetch ('127.0.0.1:8000/api/submit-product',{
           method: 'POST',
           headers:headers,
           body:JSON.stringify(data)

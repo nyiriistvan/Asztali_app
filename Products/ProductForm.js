@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Picker } from 'react-native';
-import LogoutButton from '../Login/Logoutbutton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TOKEN_KEY = 'TOKEN_KEY';
@@ -8,6 +7,7 @@ const TOKEN_KEY = 'TOKEN_KEY';
 const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
   const [weight, setWeight] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -72,7 +72,10 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
     }
   };
   
-  
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem(TOKEN_KEY);
+    setIsAdmin(false);
+  };
   
   
 
@@ -99,7 +102,8 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
 </Picker>
 
       <Button title="Mentés" onPress={handleSubmit} style={styles.button} />
-      <Button title="Kijelentkezés" onPress={onLogout} />
+
+      {isAdmin && <Button title="Kijelentkezés" onPress={handleLogout} />}
     </View>
   );
 };

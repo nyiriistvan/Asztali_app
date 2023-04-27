@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList } from 'react-native';
-import axios from 'axios';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -11,17 +10,8 @@ const ProductList = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/productlist');
+      const response = fetch ('http://127.0.0.1:8000/api/productlist');
       setProducts(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const deleteProduct = async (id) => {
-    try {
-      const response = await axios.delete(`http://127.0.0.1:8000/api/deleteproduct/${id}`);
-      setProducts(products.filter(product => product.id !== id));
     } catch (error) {
       console.log(error);
     }
@@ -31,7 +21,6 @@ const ProductList = () => {
     <View>
       <Text>{item.name}</Text>
       <Text>{item.price}</Text>
-      <Button title="Delete" onPress={() => deleteProduct(item.id)} />
     </View>
   );
 

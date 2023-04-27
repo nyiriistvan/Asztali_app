@@ -1,11 +1,11 @@
 
 ## Fejlesztői Dokumentáció
 
-Ez a fejlesztői dokumentáció az Tojgli alkalmazás fejlesztői számára készült. Az alábbiakban bemutatom az alkalmazás architektúráját, az általa használt technológiákat, a főbb funkciókat és azok működését, valamint a tesztelési eljárásokat és azok használatát.
+Ez a fejlesztői dokumentáció a Tojgli alkalmazás fejlesztői számára készült. Az alábbiakban bemutatom az alkalmazás architektúráját, az általa használt technológiákat, a főbb funkciókat és azok működését, valamint a tesztelési eljárásokat és azok használatát.
 
 ## Architektúra
 
-Az Asztali alkalmazás egy webalkalmazás, amely React keretrendszerre épül. A  backend különálló egység, amelyet a következőképpen lehet elérni:
+A Tojgli alkalmazás egy webalkalmazás, amely React keretrendszerre épül. A  backend különálló egység, amelyet a következőképpen lehet elérni:
 
 A backend elérhető a `api` mappában található útvonalak segítségével.
 
@@ -38,7 +38,7 @@ Az Tojgli alkalmazás lehetővé teszi a felhasználók számára, hogy virtuál
 
 ## Telepítési útmutató
 
-Az Asztali alkalmazás telepítése a következő lépéseket igényli:
+Az Tojgli alkalmazás telepítése a következő lépéseket igényli:
 
 1. Klónozza le a GitHub projektet a saját gépére.
 2. Telepítse a Node.js-t, ha még nem tette meg.
@@ -55,8 +55,8 @@ npm install
 npx expo
 ```
 
-Ezekkel a lépésekkel sikeresen telepítheti és futtathatja az Asztali alkalmazást a saját gépén.
+Ezekkel a lépésekkel sikeresen telepítheti és futtathatja az Tojgli alkalmazást a saját gépén.
 
 ## Konklúzió
 
-Az Tojgli alkalmazás egy egyszerű, de hatékony Termékfelvevő alkalmazás, amely könnyen telepíthető és használható. A dokumentáció által bemutatott információk és lépések lehetővé teszik a fejlesztők számára az alkalmazás bővítését és tesztelését.
+Az Tojgli alkalmazás egy egyszerű, de hatékony termékfelvevő alkalmazás, amely könnyen telepíthető és használható. A dokumentáció által bemutatott információk és lépések lehetővé teszik a fejlesztők számára az alkalmazás bővítését és tesztelését.

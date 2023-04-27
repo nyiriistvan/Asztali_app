@@ -44,39 +44,39 @@ const ProductView = () => {
       console.log(error);
     }
   };
-  const uploadImage = async (productId, image) => {
-    const formData = new FormData();
-    formData.append('image', {
-      uri: image.uri,
-      type: image.type,
-      name: image.fileName,
-    });
+  // const uploadImage = async (productId, image) => {
+  //   const formData = new FormData();
+  //   formData.append('image', {
+  //     uri: image.uri,
+  //     type: image.type,
+  //     name: image.fileName,
+  //   });
   
-    try {
-      const token = await AsyncStorage.getItem('token');
-      const response = await fetch(`${BASE_URL}/api/image/${productId}`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-        body: formData,
-      });
+    // try {
+    //   const token = await AsyncStorage.getItem('token');
+    //   const response = await fetch(`${BASE_URL}/api/image/${productId}`, {
+    //     method: 'POST',
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //       'Content-Type': 'multipart/form-data',
+    //     },
+    //     body: formData,
+    //   });
   
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       throw new Error(errorData.message);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
   
 
-  //const getImageUrl = async (id) => {
-   // const token = await AsyncStorage.getItem('token');
-   // return `${BASE_URL}/api/image/${id}?token=${token}`;
- // };
+  const getImageUrl = async (id) => {
+   const token = await AsyncStorage.getItem('token');
+   return `${BASE_URL}/api/image/${id}?token=${token}`;
+ };
   const renderEditButton = (id) => {
     return (
       <TouchableOpacity style={[styles.button, styles.editButton]} onPress={() => handleUpdate(id)}>
@@ -114,10 +114,11 @@ const ProductView = () => {
       <TableCell>{product.price}</TableCell>
       <TableCell>{product.weight}</TableCell>
       <TableCell>
-        <img
-        //  src={`http://localhost:8000/api/image/${product.id}`}
-        //  alt={product.name}
-        />
+      <img
+        src={`http://localhost:8000/storage/images/1682584008_megsem_egyforma_mint_ket_tojas_00.jpg`}
+        alt={product.name}
+        style={{width: "50%", height: "auto"}}
+      />
       </TableCell>
       <TableCell style={styles.buttonContainer}>
         <TouchableOpacity

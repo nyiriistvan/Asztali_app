@@ -1,12 +1,15 @@
 # Eggshop mobilos applikáció
 
 ## Bevezető
-Ez a React Native-ban megírt program arra szolgál, hogy a boltot akár mobilról is elérjék a beszerzéssel foglalkozók. Így könnyebben átlátják a raktárban lévő termékeket, illetve fel tudják tölteni az új szállítmányt.
+Ez a React Native-ban megírt program arra szolgál, hogy a boltot akár mobilról is elérjék a beszerzéssel foglalkozók. Így könnyebben átlátják a raktárban lévő termékeket, illetve fel tudják tölteni az új tojásokat amiket kaptak.
 
 ## Hogyan futtatható az app?
 A következő parancsokra lesz szükségünk az alkalmazás futtatásához:
+
 - Először az `npm install` parancsot kell futtatni, hogy telepítsük a `Node-Modules` könyvtárat.
+
 - Ezután az `npx expo` parancsra van szükségünk, amivel elindíthatjuk az alkalmazást és megjeleníthetjük a felületet.
+
 - Miután megadjuk a belépési adatokat, beléphetünk a felületre, ahol kezelni tudjuk a termékeket.
 
 ## Alkalmazás komponensei
@@ -28,6 +31,7 @@ Ez a komponens arra szolgál, hogy kilistázzuk a termékeket, illetve ezen a f�
 Ez a komponens arra szolgál hogy lekérje az adatokat amik már bentvannak a szerveren és a Table komponensel táblázatba rendezve megjelenítse az adatokat.
 ### Table
 Ez a komponens arra szolgál hogy a ProductView komponenesel lehívott adatokat a backend szerverről táblázatban megjelenítse.
+
 ### Adminlogin
 Ez a komponens arra szolgál, hogy a LoginForm-ból átküldött adatokat ellenőrizzük, hogy admin jogosultsággal rendelkeznek-e az `is_admin` függvényen keresztül. Hogyha nem admin aki beakar lépni hibára fut és nem engedi bejelentkezni.
 

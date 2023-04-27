@@ -1,6 +1,7 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const TOKEN_KEY = 'TOKEN_KEY';
 const BASE_URL = "http://localhost:8000/api";
 
 export const login = async (credentials) => {
@@ -18,12 +19,26 @@ export const getProducts = async () => {
   return response.data;
 };
 
-export const createProduct = async (product) => {
-  const token = await AsyncStorage.getItem("token");
-  return await axios.post(`${BASE_URL}/submit-product`, product, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-};
+export const submitProduct = async () => {
+const data = { name:name, price:price, weight:weight, description:description, category:category };
+const tokenpromise= AsyncStorage.getItem(TOKEN_KEY);
+      let token = "";
+      tokenpromise.then((res)=>{
+        token=res 
+        console.log(token);
+        const headers = {"Authorization": `${token}`}
+        console.log(headers);
+        fetch ('http://127.0.0.1:8000/api/submit-product',{
+          method: 'POST',
+          headers:headers,
+          body:JSON.stringify(data)
+          })
+        .then(res => res.json())
+        .then(res =>{
+          console.log(res);
+        })
+      })
+    };
 
 export const deleteProduct = async (id) => {
   const token = await AsyncStorage.getItem("token");

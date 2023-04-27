@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import ProductList from './ProductList';
-import ProductForm from './ProductForm';
-import ProductView from './ProductView';
-import { getProducts, createProduct, updateProduct, deleteProduct } from './api';
+import ProductList from './Products/ProductList';
+import ProductForm from './Products/ProductForm';
+import ProductView from './Products/ProductView';
+import { getProducts,submitProduct} from './api/api';
 
 const TOKEN_KEY = 'TOKEN_KEY';
 
@@ -14,7 +14,12 @@ const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [price, setPrice] = useState(null);
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+  const [weight, setWeight] = useState('');
+  const [category, setCategory]= useState('');
+  const [description, setDescription]= useState('');
+  const [categories,setCategories] = useState([]);
   const [product, setProduct] = useState([]);
   useEffect(() => {
     checkLoggedIn();
@@ -40,9 +45,9 @@ const App = () => {
 
   const handleSubmit = async () => {
     try {
-      const data = { name, price, weight, description, categories };
-      const product = await (productId ? updateProduct(productId, data) : createProduct(data));
-      handleSubmitProduct(product);
+      const data = { name:name, price:price, weight:weight, description:description, category: categories };
+      const product =JSON.stringify(data);
+      await submitProduct(product);
     } catch (error) {
       console.log(error);
     }
@@ -129,14 +134,23 @@ const App = () => {
         <Text style={styles.title}>Product List</Text>
         {isAdmin && <Button title="Kijelentkezés" onPress={handleLogout} />}
         <ProductList products={products} onEditProduct={handleEditProduct} onDeleteProduct={handleDeleteProduct} />
-        {isAdmin && <ProductForm onSubmit={handleSubmit({ name: products.name, price: products.price, weight: products.weight, description: products.description, categories: products.categories })} />}
-        <ProductView product={setProducts} navigation={navigation} />
+       {isAdmin && <ProductForm
+        onSubmit={handleSubmit}
+        price={price}
+        setName={setName}
+        setPrice={setPrice}
+        setWeight={setWeight}
+        setCategory={setCategory}
+        setDescription={setDescription}
+          setCategories={setCategories}
+                                        />}
+        <ProductView product={product} navigation={navigation} />
       </ScrollView>
     );
   };
 
   return isAdmin ? renderApp() : renderLogin();
-};
+ };
 
 
 
@@ -277,4 +291,4 @@ const App = () => {
   },
 });
 
-export default App;
+ export default App;

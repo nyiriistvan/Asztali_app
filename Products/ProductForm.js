@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Picker } from 'react-native';
-import axios from 'axios';
-import LogoutButton from './Logoutbutton';
+import LogoutButton from '../Login/Logoutbutton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TOKEN_KEY = 'TOKEN_KEY';
@@ -10,56 +9,61 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [weight, setWeight] = useState('');
-  const [category, setCategory]= useState('');
-  const [description, setDescription]= useState('');
-  const [categories,setCategories] = useState([]);
-  const [handleProductSelect,setSelectedProduct] = useState('');
+  const [category, setCategory] = useState('');
+  const [description, setDescription] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [handleProductSelect, setSelectedProduct] = useState('');
   const [existingCategories, setExistingCategories] = useState([]);
 
   useEffect(() => {
     getCategories();
-    handleSubmit();
   }, []);
-  
+
   const getCategories = async () => {
     try {
-      //const response = await fetch(`http://127.0.0.1:8000/api/categories`);
-      //const data = await response.json();
-      fetch(`http://127.0.0.1:8000/api/categories`)
-      .then(res => res.json())
-      .then(res => {
-        setCategories(res.data);
-      });
-      
-      //setCategories(data);
+      const response = await fetch(`http://127.0.0.1:8000/api/categories`);
+      const data = await response.json();
+      setCategories(data.data);
       console.log(categories);
     } catch (error) {
       console.error(error);
     }
   };
 
-  
   const handleSubmit = async () => {
+    console.log(category.id);
+    const data = { name: name, price: price, weight: weight, description: description, category: category };
+    console.log(data);
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
+    const headers = {
+      "Authorization": `${token}`,
+      "Content-Type": "application/json"
+    };
+    console.log(headers);
+    fetch('http://127.0.0.1:8000/api/submit-product', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(data)
+      })
+    
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  const handleUpdate = async (id) => {
     try {
-      const data = { name, price, weight, description,categories, };
-      console.log(data);
+      const data = { name, price, weight, description, category };
       const headers = { Authorization: `Bearer ${await AsyncStorage.getItem(TOKEN_KEY)}` };
-      let response;
-     // console.log(data,headers);
-     if (productId) {
-        response = await fetch(`http://127.0.0.1:8000/api/updateproduct/${id}`, {
-          method: 'PUT',
-          headers,
-          body: JSON.stringify(data),  
-        });
-      } else {
-          response = await fetch('http://127.0.0.1:8000/api/submit-product', {
-          method: 'POST',
-          headers,
-          body: JSON.stringify(data)
-        });
-      }
-      //console.log(data);
+      const response = await fetch(`http://127.0.0.1:8000/api/products/${id}`, {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify(data),
+          });
       const responseData = await response.json();
       onSubmit(responseData);
       console.log(responseData);
@@ -67,7 +71,7 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
       console.log(error);
     }
   };
-
+  
   
   
   
@@ -85,15 +89,17 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
       <TextInput value={description} onChangeText={setDescription} style={styles.input} />
       <Text style={styles.label}>Kategória:</Text>
       <Picker
-        selectedValue={category}
-        onValueChange={(itemValue) => setCategory(itemValue)}
-      >
-        {categories.map((category) => (
-          <Picker.Item key={category.id} label={category.category} value={category.id} />
-        ))}
-      </Picker>
+      selectedValue={category}
+      onValueChange={(itemValue) => setCategory(itemValue)}
+    >
+    <Picker.Item label="Válassz kategóriát" value="" />
+    {categories.map((category) => (
+    <Picker.Item key={category.id} label={category.category} value={category.id} />
+  ))}
+</Picker>
+
       <Button title="Mentés" onPress={handleSubmit} style={styles.button} />
-      <Button title="Kijelentkezés" onPress={LogoutButton} />
+      <Button title="Kijelentkezés" onPress={onLogout} />
     </View>
   );
 };

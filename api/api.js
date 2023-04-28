@@ -33,7 +33,7 @@ const tokenpromise= AsyncStorage.getItem(TOKEN_KEY);
           headers:headers,
           body:JSON.stringify(data)
           })
-        .then(res => res.json())
+        // .then(res => res.json())
         .then(res =>{
           console.log(res);
         })
@@ -42,7 +42,7 @@ const tokenpromise= AsyncStorage.getItem(TOKEN_KEY);
 
 export const deleteProduct = async (id) => {
   const token = await AsyncStorage.getItem("token");
-  return await axios.delete(`${BASE_URL}/delete-product/${id}`, {
+  return await axios.delete(`${BASE_URL}/deleteproduct/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };

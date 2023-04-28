@@ -9,11 +9,27 @@ const AdminLogin = ({ onLoginSuccess }) => {
   const handleLogin = async () => {
     try {
       const token = await login(username, password);
-      onLoginSuccess(token);
+      const response = fetch('http://127.0.0.1:8000/api/registeredusers', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to get user information');
+      }
+  
+      const user = await response.json();
+      if (user.is_admin) {
+        onLoginSuccess(token);
+      } else {
+        Alert.alert('Error', 'You do not have admin privileges');
+      }
     } catch (error) {
       Alert.alert('Error', 'Invalid username or password');
     }
-  };
+  };  
 
   return (
     <View>

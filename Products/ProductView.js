@@ -6,7 +6,11 @@ import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //import {handleDeleteProduct} from './App';
+
+
 const BASE_URL = 'http://127.0.0.1:8000/api';
+const TOKEN_KEY= 'TOKEN_KEY';
+
 
 const ProductView = () => {
   const [products, setProduct] = useState([]);
@@ -34,16 +38,28 @@ const ProductView = () => {
   }, []);
 
   const handleDelete = async (id) => {
+    console.log(`id: ${id},` );
     try {
-        fetch(`http://localhost:8000/api/deleteproduct/${id}`, {
+      console.log("Before fetch");
+      const token = await AsyncStorage.getItem(TOKEN_KEY);
+      const response = await fetch(`http://127.0.0.1:8000/api/deleteproduct/${id}`, {
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
       });
-      setProducts(product.filter(product => product.id !== id));
-      console.log(product.name);
+      console.log("After fetch");
+      const data = await response.json();
+      console.log(data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      console.log("Error occurred");
     }
-  };
+  }
+  
+  
   // const uploadImage = async (productId, image) => {
   //   const formData = new FormData();
   //   formData.append('image', {
@@ -77,6 +93,36 @@ const ProductView = () => {
    const token = await AsyncStorage.getItem('token');
    return `${BASE_URL}/api/image/${id}?token=${token}`;
  };
+
+ const handleUpdate = async (id,name,price,weight,description, ) => {
+  console.log(`name: ${name},price: ${price} ,weight: ${weight}, description: ${description},`);
+  const token = await AsyncStorage.getItem(TOKEN_KEY);
+  console.log(token);
+  try {
+    console.log("Before fetch");
+    const response = await fetch(`http://127.0.0.1:8000/api/updateproduct/${id}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        name:name,
+        price:price,
+        weight:weight,
+        description:description
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+    console.log("Error occurred");
+  }
+}
+
+
   const renderEditButton = (id) => {
     return (
       <TouchableOpacity style={[styles.button, styles.editButton]} onPress={() => handleUpdate(id)}>

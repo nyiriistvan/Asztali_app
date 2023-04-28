@@ -29,31 +29,71 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
       console.error(error);
     }
   };
-
   const handleSubmit = async () => {
-    console.log(category.id);
-    const data = { name: name, price: price, weight: weight, description: description, category: category };
-    console.log(data);
-    const token = await AsyncStorage.getItem(TOKEN_KEY);
-    const headers = {
-      "Authorization": `${token}`,
-      "Content-Type": "application/json"
-    };
-    console.log(headers);
-    fetch('http://127.0.0.1:8000/api/submit-product', {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(data)
-      })
-    
-      .then(res => res.json())
-      .then(res => {
-        console.log(res);
-      })
-      .catch(error => {
-        console.error(error);
+    console.log(`name: ${name}, price: ${price}, weight:${weight},description:${description},category:${category}   `);
+  
+    if (!category) {
+      console.error("Category is required.");
+      return;
+    }
+  
+    try {
+      const token = await AsyncStorage.getItem(TOKEN_KEY);
+      const response = await fetch(`http://127.0.0.1:8000/api/submit-product/`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: name,
+          price: price,
+          weight:weight,
+          description:description,
+          category:category
+        }),
       });
-  };
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+      console.log("Error occurred");
+    }
+  }
+  
+  
+  
+
+  // const handleSubmit = async (name, price, weight , description, category) => {
+  //   console.log(category.id);
+  //   // const data = { name: name, price: price, weight: weight, description: description, category: category };
+  //   // console.log(data);
+  //   const token = await AsyncStorage.getItem(TOKEN_KEY);
+  //   console.log(token);
+  //   const headers = {
+  //     "Authorization": `${token}`,
+  //     "Content-Type": "application/json"
+  //   };
+  //   console.log(headers);
+  //   fetch('http://127.0.0.1:8000/api/submit-product', {
+  //     // mode:"no-cors",
+  //     method: 'POST',
+  //     headers: headers,
+  //     body: JSON.stringify{(
+  //       name:name,
+  //       price:price
+  //     )}
+  //     })
+    
+  //     // .then(res => res.json())
+  //     .then(res => {
+  //       console.log(res);
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+  // };
 
   const handleUpdate = async (id) => {
     try {
@@ -97,13 +137,13 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
     >
     <Picker.Item label="Válassz kategóriát" value="" />
     {categories.map((category) => (
-    <Picker.Item key={category.id} label={category.category} value={category.id} />
+    <Picker.Item key={category.id} label={category.category} value={category.name} />
   ))}
 </Picker>
 
       <Button title="Mentés" onPress={handleSubmit} style={styles.button} />
 
-      {isAdmin && <Button title="Kijelentkezés" onPress={handleLogout} />}
+      <Button title="Kijelentkezés" onPress={handleLogout} />
     </View>
   );
 };

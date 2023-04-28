@@ -14,7 +14,7 @@ A backend elérhető a `api` mappában található útvonalak segítségével.
 - React: A frontend keretrendszer.
 - Node.js: A backend környezet.
 - Express: Az alkalmazás szerveroldali keretrendszere.
-- MongoDB: Az adatbázis-kezelő rendszer.
+- MariaDB: Az adatbázis-kezelő rendszer.
 
 ## Főbb funkciók és működés
 
@@ -55,7 +55,7 @@ npm install
 npx expo
 ```
 
-Ezekkel a lépésekkel sikeresen telepítheti és futtathatja az Tojgli alkalmazást a saját gépén.
+Ezekkel a lépésekkel sikeresen telepítheti és futtathatja az Tojgli alkalmazást a saját gépén.Emellett választható az hogy webes felületen vagy mobilos felületen szeretnénk az alkalmazást elindítani.
 
 ## Konklúzió
 

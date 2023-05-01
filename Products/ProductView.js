@@ -5,6 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NavigationContainer from '@react-navigation/native';
 //import {handleDeleteProduct} from './App';
 
 
@@ -13,9 +14,11 @@ const TOKEN_KEY= 'TOKEN_KEY';
 
 
 const ProductView = () => {
-  const [products, setProduct] = useState([]);
-  const [product,setProducts] =useState([]);
 
+
+  const [products, setProduct] = useState([]);
+
+  
   useEffect(() => {
     
     const fetchProducts = async () => {
@@ -123,14 +126,16 @@ const ProductView = () => {
 }
 
 
-  const renderEditButton = (id) => {
-    return (
-      <TouchableOpacity style={[styles.button, styles.editButton]} onPress={() => handleUpdate(id)}>
-        <Feather name="edit" size={24} color="white" />
-      </TouchableOpacity>
+const renderEditButton = (id) => {
+  return (
+    <TouchableOpacity
+      style={[styles.button, styles.editButton]}
+      onPress={() => navigation.navigate('UpdateProduct', { productId: id })}
+    >
+      <Feather name="edit" size={24} color="white" />
+    </TouchableOpacity>
     );
-  };
-
+   };
   const renderDeleteButton = (id) => {
     return (
       <TouchableOpacity style={[styles.button, styles.deleteButton]} onPress={() => handleDelete(id)}>
@@ -175,7 +180,7 @@ const ProductView = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.deleteButton}
-          onPress={() => handleDelete(product.id)}
+          onPress={() => handleDelete(product.id,product.name, product.weight,product.description)}
         >
           <FontAwesome name="trash-o" style={styles.icon} />
         </TouchableOpacity>

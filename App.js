@@ -6,6 +6,8 @@ import ProductList from './Products/ProductList';
 import ProductForm from './Products/ProductForm';
 import ProductView from './Products/ProductView';
 import { getProducts,submitProduct} from './api/api';
+import { NavigationContainer } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 
 const TOKEN_KEY = 'TOKEN_KEY';
 
@@ -21,6 +23,8 @@ const App = () => {
   const [description, setDescription]= useState('');
   const [categories,setCategories] = useState([]);
   const [product, setProduct] = useState([]);
+  // const [useNavigation] = useNavigation();
+
   useEffect(() => {
     checkLoggedIn();
     loadProducts();

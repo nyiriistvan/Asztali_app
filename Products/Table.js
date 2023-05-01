@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   tableRow: {
     flexDirection: 'row',
-    borderBottomWidth: 1,
+    borderBottomWidth: 5,
     borderBottomColor: '#ccc',
     margin:5,
   },
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   tableHeader: {
-    flexDirection: 'row',
+    flexDirection: '',
     backgroundColor: '#f2f2f2',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',

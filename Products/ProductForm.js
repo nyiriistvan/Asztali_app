@@ -143,7 +143,7 @@ const ProductForm = ({ productId, onSubmit, onModify, onLogout, bearerToken }) =
 
       <Button title="Mentés" onPress={handleSubmit} style={styles.button} />
 
-      <Button title="Kijelentkezés" onPress={handleLogout} />
+      {/* <Button title="Kijelentkezés" onPress={handleLogout} /> */}
     </View>
   );
 };

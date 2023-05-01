@@ -57,6 +57,13 @@ npx expo
 
 Ezekkel a lépésekkel sikeresen telepítheti és futtathatja az Tojgli alkalmazást a saját gépén.Emellett választható az hogy webes felületen vagy mobilos felületen szeretnénk az alkalmazást elindítani.
 
+## Tesztelés
+A tesztelést a Testing mappában található képek mutatják be az ott látott adatok alapján lehet használni az alkalmazást. Az első képen a bejelentkezéshez a következő adatokat használtuk a teszteléshez. Felhasználónév: Teszt, jelszó:Asd123. Ezután sikeresen átdob minket a termékfelévteli felületre.A következő képen a termékfelvételi oldalt látjuk és az adatbáziból lekért adatokat a táblázatban. Az ezt követő képen láthatjuk a bevitt adatokat és hogy sikeresen felveszi amit a konzol jelöl. Ezután frissítve az oldalon láthatjuk a frissen felvett terméket.Hogyha kihagyunk bármilyen adatot a terméket nemfogja felvenni.Sikertelen bejelentkezés esetén a felületen megjelenik egy hibaüzenet és jelzi hogy melyik adat lehet hibás.
+
+
+## Várható fejlesztések
+Az Update metódus befejezése, új design hozzáadása, illetve új funkciókkal való bővítés.
 ## Konklúzió
 
 Az Tojgli alkalmazás egy egyszerű, de hatékony termékfelvevő alkalmazás, amely könnyen telepíthető és használható. A dokumentáció által bemutatott információk és lépések lehetővé teszik a fejlesztők számára az alkalmazás bővítését és tesztelését.
+
